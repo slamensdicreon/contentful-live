@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Home, Mail, Phone, MapPin, Instagram, Twitter, Facebook, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Linkedin } from 'lucide-react';
 import { useNavigation } from '@/hooks/useContentful';
 import type { NavigationLink } from '@/types/contentful';
+import logo from '@/assets/logo.png';
 
 // Fallback navigation when Contentful is not configured
 const fallbackFooterLinks: NavigationLink[] = [
@@ -42,14 +43,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold mb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-                <Home className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="text-gradient">NestFinder</span>
+            <Link to="/" className="inline-block mb-4">
+              <img 
+                src={logo} 
+                alt="FirstKey Homes" 
+                className="h-10 w-auto"
+              />
             </Link>
             <p className="text-muted-foreground text-sm mb-6 max-w-xs">
-              Find your perfect home with NestFinder. We make renting simple, transparent, and stress-free.
+              Find your perfect home with FirstKey Homes. We make renting simple, transparent, and stress-free.
             </p>
             <div className="flex gap-3">
               {socialLinks.map(({ icon: Icon, href, label }) => (
@@ -137,7 +139,7 @@ export function Footer() {
       <div className="border-t border-border">
         <div className="container py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} NestFinder. All rights reserved.
+            © {new Date().getFullYear()} FirstKey Homes. All rights reserved.
           </p>
           <div className="flex gap-6">
             {footerLinks.slice(4).map((link) => (
