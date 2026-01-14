@@ -3,24 +3,36 @@ import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/modules/Hero';
 import { PromoStrip } from '@/components/modules/PromoStrip';
 import { CardGrid } from '@/components/modules/CardGrid';
+import { ModuleRenderer } from '@/components/modules/ModuleRenderer';
 import { ListingGrid } from '@/components/listings/ListingGrid';
 import { getFeaturedListings } from '@/lib/mock-listings';
 import { usePage } from '@/hooks/useContentful';
+import type { PageModule } from '@/types/contentful';
 
 const Index = () => {
-  const { data: page, loading } = usePage('home');
+  const { data: page, loading, isConfigured } = usePage('home');
   const featuredListings = getFeaturedListings();
+  
+  // Check if we have Contentful modules to render
+  const hasModules = page?.fields?.modules && page.fields.modules.length > 0;
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       
       <main className="flex-1">
-        <Hero />
-        <PromoStrip />
-        <CardGrid />
+        {/* Render from Contentful if available, otherwise use fallback components */}
+        {hasModules ? (
+          <ModuleRenderer modules={page.fields.modules as PageModule[]} />
+        ) : (
+          <>
+            <Hero />
+            <PromoStrip />
+            <CardGrid />
+          </>
+        )}
         
-        {/* Featured Listings */}
+        {/* Featured Listings - always shown */}
         <section className="py-16 md:py-24 bg-muted/30">
           <div className="container">
             <div className="text-center mb-12">

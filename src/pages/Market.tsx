@@ -2,10 +2,14 @@ import { useParams } from 'react-router-dom';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/modules/Hero';
+import { RichText } from '@/components/modules/RichText';
 import { ListingGrid } from '@/components/listings/ListingGrid';
 import { getListingsByCity } from '@/lib/mock-listings';
+import { useMarketPage } from '@/hooks/useContentful';
+import { getAssetUrl } from '@/types/contentful';
 
-const marketData: Record<string, { name: string; image: string; description: string }> = {
+// Fallback data for when Contentful isn't configured
+const fallbackMarketData: Record<string, { name: string; image: string; description: string }> = {
   austin: {
     name: 'Austin',
     image: 'https://images.unsplash.com/photo-1531218150217-54595bc2b934?w=1920&q=80',
@@ -30,9 +34,22 @@ const marketData: Record<string, { name: string; image: string; description: str
 
 const Market = () => {
   const { slug } = useParams<{ slug: string }>();
-  const market = slug ? marketData[slug] : null;
-  const cityName = market?.name || slug?.charAt(0).toUpperCase() + (slug?.slice(1) || '');
+  const { data: marketPage, loading, isConfigured } = useMarketPage(slug || '');
+  
+  // Use Contentful data if available, otherwise fall back to hardcoded data
+  const fallback = slug ? fallbackMarketData[slug] : null;
+  const cityName = marketPage?.fields?.marketName || fallback?.name || slug?.charAt(0).toUpperCase() + (slug?.slice(1) || '');
   const listings = getListingsByCity(cityName);
+
+  // Build hero data from Contentful or fallback
+  const heroData = marketPage?.fields?.heroModule;
+  const heroFallback = {
+    headline: `Homes in ${cityName}`,
+    subheadline: fallback?.description || `Discover amazing rental properties in ${cityName}.`,
+    backgroundImage: fallback?.image,
+    ctaLabel: 'View All Homes',
+    ctaLink: '/homes',
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -40,14 +57,18 @@ const Market = () => {
       
       <main className="flex-1">
         <Hero
-          fallback={{
-            headline: `Homes in ${cityName}`,
-            subheadline: market?.description || `Discover amazing rental properties in ${cityName}.`,
-            backgroundImage: market?.image,
-            ctaLabel: 'View All Homes',
-            ctaLink: '/homes',
-          }}
+          data={heroData}
+          fallback={heroFallback}
         />
+
+        {/* Rich text intro if available from Contentful */}
+        {marketPage?.fields?.introRichText && (
+          <section className="py-12 md:py-16 bg-muted/30">
+            <div className="container max-w-4xl">
+              <RichText content={marketPage.fields.introRichText} />
+            </div>
+          </section>
+        )}
 
         <section className="py-16 md:py-24">
           <div className="container">
