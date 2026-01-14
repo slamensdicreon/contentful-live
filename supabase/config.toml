@@ -2,3 +2,6 @@ project_id = "tmqonavntkrnajcolfio"
 
 [functions.setup-contentful]
 verify_jwt = false
+
+[functions.populate-contentful]
+verify_jwt = false
