@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Bold & Colorful Rental Platform Design System
+/* FirstKey Homes Brand Design System
+   Primary brand color: FirstKey Purple (#6B2D8B → HSL 280 52% 36%)
    All colors are HSL values.
 */
 
@@ -10,122 +11,120 @@
   :root {
     /* Core backgrounds */
     --background: 0 0% 100%;
-    --foreground: 240 10% 10%;
+    --foreground: 280 20% 10%;
 
     /* Cards */
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 10%;
+    --card-foreground: 280 20% 10%;
 
     /* Popovers */
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 10%;
+    --popover-foreground: 280 20% 10%;
 
-    /* Primary - Electric Coral */
-    --primary: 12 95% 60%;
+    /* Primary - FirstKey Purple */
+    --primary: 280 52% 36%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Deep Ocean Blue */
-    --secondary: 220 85% 55%;
+    /* Secondary - Lighter Purple */
+    --secondary: 280 45% 50%;
     --secondary-foreground: 0 0% 100%;
 
     /* Muted backgrounds */
-    --muted: 220 20% 96%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 280 15% 96%;
+    --muted-foreground: 280 10% 45%;
 
-    /* Accent - Vibrant Teal */
-    --accent: 175 85% 40%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent - Warm Gold */
+    --accent: 38 90% 50%;
+    --accent-foreground: 280 52% 20%;
 
     /* Destructive */
     --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 100%;
 
     /* Borders & inputs */
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 12 95% 60%;
+    --border: 280 10% 90%;
+    --input: 280 10% 90%;
+    --ring: 280 52% 36%;
 
     --radius: 0.75rem;
 
     /* Additional brand colors */
-    --coral: 12 95% 60%;
-    --coral-light: 12 95% 75%;
-    --ocean: 220 85% 55%;
-    --ocean-dark: 220 85% 40%;
-    --teal: 175 85% 40%;
-    --sunshine: 45 95% 55%;
-    --lavender: 270 60% 65%;
-    --mint: 160 60% 85%;
+    --purple: 280 52% 36%;
+    --purple-light: 280 45% 55%;
+    --purple-dark: 280 55% 28%;
+    --gold: 38 90% 50%;
+    --gold-light: 38 85% 65%;
+    --slate: 280 10% 45%;
+    --lavender: 280 40% 85%;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(12 95% 60%) 0%, hsl(35 95% 55%) 50%, hsl(270 60% 65%) 100%);
-    --gradient-ocean: linear-gradient(135deg, hsl(220 85% 55%) 0%, hsl(175 85% 40%) 100%);
-    --gradient-sunset: linear-gradient(135deg, hsl(12 95% 60%) 0%, hsl(45 95% 55%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(280 52% 36%) 0%, hsl(280 45% 50%) 50%, hsl(320 45% 45%) 100%);
+    --gradient-purple: linear-gradient(135deg, hsl(280 55% 28%) 0%, hsl(280 52% 36%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(280 52% 36%) 0%, hsl(38 90% 50%) 100%);
     
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(220 10% 10% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(220 10% 10% / 0.1), 0 2px 4px -2px hsl(220 10% 10% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(220 10% 10% / 0.1), 0 4px 6px -4px hsl(220 10% 10% / 0.1);
-    --shadow-xl: 0 20px 25px -5px hsl(220 10% 10% / 0.1), 0 8px 10px -6px hsl(220 10% 10% / 0.1);
-    --shadow-colored: 0 10px 30px -10px hsl(12 95% 60% / 0.35);
+    --shadow-sm: 0 1px 2px 0 hsl(280 20% 10% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(280 20% 10% / 0.1), 0 2px 4px -2px hsl(280 20% 10% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(280 20% 10% / 0.1), 0 4px 6px -4px hsl(280 20% 10% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(280 20% 10% / 0.1), 0 8px 10px -6px hsl(280 20% 10% / 0.1);
+    --shadow-colored: 0 10px 30px -10px hsl(280 52% 36% / 0.35);
 
     /* Sidebar */
-    --sidebar-background: 220 20% 98%;
-    --sidebar-foreground: 220 10% 25%;
-    --sidebar-primary: 12 95% 60%;
+    --sidebar-background: 280 15% 98%;
+    --sidebar-foreground: 280 20% 25%;
+    --sidebar-primary: 280 52% 36%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 95%;
-    --sidebar-accent-foreground: 220 10% 25%;
-    --sidebar-border: 220 15% 92%;
-    --sidebar-ring: 12 95% 60%;
+    --sidebar-accent: 280 15% 95%;
+    --sidebar-accent-foreground: 280 20% 25%;
+    --sidebar-border: 280 10% 92%;
+    --sidebar-ring: 280 52% 36%;
   }
 
   .dark {
-    --background: 230 25% 8%;
+    --background: 280 25% 8%;
     --foreground: 0 0% 95%;
 
-    --card: 230 25% 12%;
+    --card: 280 25% 12%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 230 25% 12%;
+    --popover: 280 25% 12%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 12 95% 60%;
+    --primary: 280 52% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 85% 55%;
+    --secondary: 280 45% 55%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 230 20% 18%;
-    --muted-foreground: 220 15% 60%;
+    --muted: 280 20% 18%;
+    --muted-foreground: 280 15% 60%;
 
-    --accent: 175 85% 40%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 38 85% 55%;
+    --accent-foreground: 280 52% 15%;
 
     --destructive: 0 75% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 230 20% 20%;
-    --input: 230 20% 20%;
-    --ring: 12 95% 60%;
+    --border: 280 20% 20%;
+    --input: 280 20% 20%;
+    --ring: 280 52% 45%;
 
-    --coral: 12 95% 60%;
-    --coral-light: 12 95% 70%;
-    --ocean: 220 85% 60%;
-    --ocean-dark: 220 85% 45%;
-    --teal: 175 85% 45%;
-    --sunshine: 45 95% 60%;
-    --lavender: 270 60% 70%;
-    --mint: 160 50% 30%;
+    --purple: 280 52% 45%;
+    --purple-light: 280 45% 60%;
+    --purple-dark: 280 55% 35%;
+    --gold: 38 90% 55%;
+    --gold-light: 38 85% 70%;
+    --slate: 280 10% 55%;
+    --lavender: 280 35% 35%;
 
-    --sidebar-background: 230 25% 10%;
+    --sidebar-background: 280 25% 10%;
     --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 12 95% 60%;
+    --sidebar-primary: 280 52% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 230 20% 15%;
+    --sidebar-accent: 280 20% 15%;
     --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 230 20% 18%;
-    --sidebar-ring: 12 95% 60%;
+    --sidebar-border: 280 20% 18%;
+    --sidebar-ring: 280 52% 45%;
   }
 }
 
@@ -149,12 +148,12 @@
     background: var(--gradient-hero);
   }
   
-  .gradient-ocean {
-    background: var(--gradient-ocean);
+  .gradient-purple {
+    background: var(--gradient-purple);
   }
   
-  .gradient-sunset {
-    background: var(--gradient-sunset);
+  .gradient-warm {
+    background: var(--gradient-warm);
   }
 
   .text-gradient {

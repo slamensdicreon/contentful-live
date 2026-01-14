@@ -58,18 +58,17 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         // Brand colors
-        coral: {
-          DEFAULT: "hsl(var(--coral))",
-          light: "hsl(var(--coral-light))",
+        purple: {
+          DEFAULT: "hsl(var(--purple))",
+          light: "hsl(var(--purple-light))",
+          dark: "hsl(var(--purple-dark))",
         },
-        ocean: {
-          DEFAULT: "hsl(var(--ocean))",
-          dark: "hsl(var(--ocean-dark))",
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          light: "hsl(var(--gold-light))",
         },
-        teal: "hsl(var(--teal))",
-        sunshine: "hsl(var(--sunshine))",
+        slate: "hsl(var(--slate))",
         lavender: "hsl(var(--lavender))",
-        mint: "hsl(var(--mint))",
       },
       borderRadius: {
         lg: "var(--radius)",
