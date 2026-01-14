@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.populate-contentful]
 verify_jwt = false
+
+[functions.upload-contentful-images]
+verify_jwt = false
