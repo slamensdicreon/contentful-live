@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { Menu, X, Home, Search, MapPin } from 'lucide-react';
+import { Menu, X, Search, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigation } from '@/hooks/useContentful';
 import type { NavigationLink } from '@/types/contentful';
+import logo from '@/assets/logo.png';
 
 // Fallback navigation when Contentful is not configured
 const fallbackHeaderLinks: NavigationLink[] = [
@@ -28,14 +29,12 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link 
-          to="/" 
-          className="flex items-center gap-2 font-display text-xl font-bold"
-        >
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <Home className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="text-gradient">NestFinder</span>
+        <Link to="/" className="flex items-center">
+          <img 
+            src={logo} 
+            alt="FirstKey Homes" 
+            className="h-10 w-auto"
+          />
         </Link>
 
         {/* Desktop Navigation */}
