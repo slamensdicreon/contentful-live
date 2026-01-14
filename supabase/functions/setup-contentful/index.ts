@@ -153,17 +153,20 @@ async function createContentType(
 
   console.log(`Creating content type: ${contentType.sys.id}`);
   
-  // Trim token to ensure no whitespace issues
-  const cleanToken = token.trim();
+  // Clean token - remove any non-ASCII characters and whitespace
+  const cleanToken = token.trim().replace(/[^\x00-\x7F]/g, '');
+  console.log(`Token length: ${cleanToken.length}, starts with: ${cleanToken.substring(0, 10)}...`);
 
   try {
+    // Build headers using Headers API
+    const getHeaders = new Headers();
+    getHeaders.append('Authorization', 'Bearer ' + cleanToken);
+    getHeaders.append('Content-Type', 'application/vnd.contentful.management.v1+json');
+
     // First try to get existing content type
     const getResponse = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + cleanToken,
-        'Content-Type': 'application/vnd.contentful.management.v1+json',
-      },
+      headers: getHeaders,
     });
 
     let version = 1;
@@ -174,13 +177,14 @@ async function createContentType(
     }
 
     // Create or update
+    const putHeaders = new Headers();
+    putHeaders.append('Authorization', 'Bearer ' + cleanToken);
+    putHeaders.append('Content-Type', 'application/vnd.contentful.management.v1+json');
+    putHeaders.append('X-Contentful-Version', version.toString());
+    
     const response = await fetch(url, {
       method: 'PUT',
-      headers: {
-        'Authorization': 'Bearer ' + cleanToken,
-        'Content-Type': 'application/vnd.contentful.management.v1+json',
-        'X-Contentful-Version': version.toString(),
-      },
+      headers: putHeaders,
       body: JSON.stringify(body),
     });
 
@@ -199,12 +203,13 @@ async function createContentType(
     
     // Activate/publish the content type
     const activateUrl = `${url}/published`;
+    const activateHeaders = new Headers();
+    activateHeaders.append('Authorization', 'Bearer ' + cleanToken);
+    activateHeaders.append('X-Contentful-Version', result.sys.version.toString());
+    
     const activateResponse = await fetch(activateUrl, {
       method: 'PUT',
-      headers: {
-        'Authorization': 'Bearer ' + cleanToken,
-        'X-Contentful-Version': result.sys.version.toString(),
-      },
+      headers: activateHeaders,
     });
 
     if (!activateResponse.ok) {
