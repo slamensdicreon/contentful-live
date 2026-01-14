@@ -1,1 +1,4 @@
 project_id = "tmqonavntkrnajcolfio"
+
+[functions.setup-contentful]
+verify_jwt = false
