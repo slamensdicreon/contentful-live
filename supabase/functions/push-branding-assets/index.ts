@@ -5,6 +5,18 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Helper to decode base64
+function base64ToArrayBuffer(base64: string): ArrayBuffer {
+  // Remove data URL prefix if present
+  const cleanBase64 = base64.replace(/^data:image\/\w+;base64,/, '');
+  const binaryString = atob(cleanBase64);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
+
 // Upload an asset to Contentful
 async function uploadAsset(
   spaceId: string,
@@ -12,23 +24,35 @@ async function uploadAsset(
   token: string,
   title: string,
   fileName: string,
-  imageUrl: string,
+  imageData: string | ArrayBuffer,
   contentType: string
 ): Promise<{ success: boolean; assetId?: string; error?: string }> {
   console.log(`Uploading asset: ${title}`);
   
   try {
-    // Step 1: Fetch the image
-    console.log(`Fetching image from: ${imageUrl}`);
-    const imageResponse = await fetch(imageUrl);
-    if (!imageResponse.ok) {
-      throw new Error(`Failed to fetch image: ${imageResponse.status}`);
+    // Convert base64 to ArrayBuffer if needed
+    let imageBuffer: ArrayBuffer;
+    if (typeof imageData === 'string') {
+      if (imageData.startsWith('http')) {
+        // It's a URL, fetch it
+        console.log(`Fetching image from: ${imageData}`);
+        const imageResponse = await fetch(imageData);
+        if (!imageResponse.ok) {
+          throw new Error(`Failed to fetch image: ${imageResponse.status}`);
+        }
+        const imageBlob = await imageResponse.blob();
+        imageBuffer = await imageBlob.arrayBuffer();
+      } else {
+        // It's base64 data
+        console.log('Decoding base64 image data');
+        imageBuffer = base64ToArrayBuffer(imageData);
+      }
+    } else {
+      imageBuffer = imageData;
     }
-    const imageBlob = await imageResponse.blob();
-    const imageBuffer = await imageBlob.arrayBuffer();
     console.log(`Image size: ${imageBuffer.byteLength} bytes`);
 
-    // Step 2: Create upload
+    // Create upload
     const uploadUrl = `https://upload.contentful.com/spaces/${spaceId}/uploads`;
     const uploadResponse = await fetch(uploadUrl, {
       method: 'POST',
@@ -256,12 +280,16 @@ serve(async (req) => {
       throw new Error('VITE_CONTENTFUL_SPACE_ID is not configured');
     }
 
-    // Parse request body for image URLs
+    // Parse request body for image data (can be URLs or base64)
     const body = await req.json();
-    const { faviconUrl, ogImageUrl } = body;
+    const { faviconData, ogImageData, faviconUrl, ogImageUrl } = body;
 
-    if (!faviconUrl || !ogImageUrl) {
-      throw new Error('Both faviconUrl and ogImageUrl are required');
+    // Support both base64 data and URLs
+    const faviconSource = faviconData || faviconUrl;
+    const ogImageSource = ogImageData || ogImageUrl;
+
+    if (!faviconSource || !ogImageSource) {
+      throw new Error('Both favicon and ogImage data are required (as faviconData/ogImageData or faviconUrl/ogImageUrl)');
     }
 
     console.log(`Pushing branding assets to Contentful space: ${spaceId}`);
@@ -273,7 +301,7 @@ serve(async (req) => {
       managementToken,
       'Site Favicon',
       'favicon.png',
-      faviconUrl,
+      faviconSource,
       'image/png'
     );
 
@@ -288,7 +316,7 @@ serve(async (req) => {
       managementToken,
       'Open Graph Image',
       'og-image.png',
-      ogImageUrl,
+      ogImageSource,
       'image/png'
     );
 
