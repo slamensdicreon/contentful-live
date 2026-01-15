@@ -9,15 +9,40 @@ import { ListingGrid } from '@/components/listings/ListingGrid';
 import { getFeaturedListings } from '@/lib/mock-listings';
 import { usePage } from '@/hooks/useContentful';
 import type { PageModule } from '@/types/contentful';
+import { getAssetUrl } from '@/types/contentful';
 
 const Index = () => {
   const { data: page, loading, isConfigured } = usePage('home');
   const featuredListings = getFeaturedListings();
 
-  // Update document title from Contentful or use default
+  // Update document metadata from Contentful or use defaults
   useEffect(() => {
     const title = page?.fields?.seoTitle || page?.fields?.title || 'FirstKey Homes | Quality Rental Homes';
     document.title = title;
+
+    // Update favicon if provided from CMS
+    const faviconUrl = getAssetUrl(page?.fields?.favicon);
+    if (faviconUrl) {
+      let faviconLink = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+      if (!faviconLink) {
+        faviconLink = document.createElement('link');
+        faviconLink.rel = 'icon';
+        document.head.appendChild(faviconLink);
+      }
+      faviconLink.href = faviconUrl;
+    }
+
+    // Update OG image if provided from CMS
+    const ogImageUrl = getAssetUrl(page?.fields?.ogImage);
+    if (ogImageUrl) {
+      let ogImageMeta = document.querySelector<HTMLMetaElement>('meta[property="og:image"]');
+      if (!ogImageMeta) {
+        ogImageMeta = document.createElement('meta');
+        ogImageMeta.setAttribute('property', 'og:image');
+        document.head.appendChild(ogImageMeta);
+      }
+      ogImageMeta.content = ogImageUrl;
+    }
   }, [page]);
   
   // Check if we have Contentful modules to render

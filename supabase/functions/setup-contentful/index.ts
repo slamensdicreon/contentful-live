@@ -72,6 +72,8 @@ const contentTypes = [
       { id: 'slug', name: 'Slug', type: 'Symbol', required: true, validations: [{ unique: true }] },
       { id: 'seoTitle', name: 'SEO Title', type: 'Symbol', required: false },
       { id: 'seoDescription', name: 'SEO Description', type: 'Text', required: false },
+      { id: 'favicon', name: 'Favicon', type: 'Link', linkType: 'Asset', required: false },
+      { id: 'ogImage', name: 'Open Graph Image', type: 'Link', linkType: 'Asset', required: false },
       { 
         id: 'modules', 
         name: 'Modules', 
