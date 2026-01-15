@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/modules/Hero';
@@ -12,6 +13,12 @@ import type { PageModule } from '@/types/contentful';
 const Index = () => {
   const { data: page, loading, isConfigured } = usePage('home');
   const featuredListings = getFeaturedListings();
+
+  // Update document title from Contentful or use default
+  useEffect(() => {
+    const title = page?.fields?.seoTitle || page?.fields?.title || 'FirstKey Homes | Quality Rental Homes';
+    document.title = title;
+  }, [page]);
   
   // Check if we have Contentful modules to render
   const hasModules = page?.fields?.modules && page.fields.modules.length > 0;
