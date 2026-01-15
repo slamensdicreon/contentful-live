@@ -88,6 +88,8 @@ export interface PageFields {
   slug: string;
   seoTitle?: string;
   seoDescription?: string;
+  favicon?: ContentfulAsset;
+  ogImage?: ContentfulAsset;
   modules?: PageModule[];
 }
 
